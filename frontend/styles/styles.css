@@ -1,0 +1,64 @@
+body {
+    background-color: #848884;
+    font-family: Jazz LET, fantasy;
+}
+
+.container {
+    position: relative;
+    top: 25%;
+}
+
+div  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 416px;
+    /* border: 1px black solid; */
+}
+
+[class$="side"] {
+    text-align: center;
+    margin: auto;
+    height: 40px; 
+    position: relative;
+    bottom: 150px;
+    color: black
+}
+
+.board {
+    min-height: 100%;
+}
+
+td {
+    width: 60px;
+    height: 60px;
+    background-color: #6F4E37;
+}
+
+.empty-cell {
+    background-color: #EADDCA;
+    border: none;
+}
+
+.white-piece {
+    background-color: white;
+}
+
+.red-piece {
+    background-color: red;
+}
+
+[class$="piece"] {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin: auto;
+    border: 1px solid black;
+}
+
+.king {
+    background-color: white;
+    background-image: url('../img/king_icon.png');
+    width: 40px;
+    height: 40px;
+}
