@@ -12,7 +12,7 @@ class Button():
         if not self.image:
             self.image = self.text
         self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
-        self.test_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 	    
 
     def update(self, window):
@@ -25,7 +25,7 @@ class Button():
             return True
         return False
 
-    def chnageColor(self, position):
+    def changeColor(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.text = self.font.render(self.text_input, True, self.hovering_color)
         else:
