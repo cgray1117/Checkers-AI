@@ -45,7 +45,7 @@ def play():
         clock.tick(FPS)
         #Checks whos turn is it, if its the computers turn or white then use minimax algorithm to find best move on the board
         if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), 6, WHITE, game)
+            value, new_board = minimax(game.get_board(), 4, WHITE, game)
             game.ai_move(new_board)
         #If there is no winner after the move then keep playing
         if game.winner() != None:
