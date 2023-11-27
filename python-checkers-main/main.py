@@ -4,7 +4,7 @@ from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from checkers.game import Game
 from minimax.algorithm import minimax
 
-#Frames per second for gameplay
+#Frames per second for gameplay 
 FPS = 60
 
 #Define the window and title
@@ -22,6 +22,7 @@ def get_row_col_from_mouse(pos):
 #Gets which players turn it is
 #Gets possible move positions
 #Shapes on top of shapes moving within the rules of checkers 
+
 def main():
     run = True
     clock = pygame.time.Clock()

@@ -2,10 +2,11 @@ from .constants import RED, WHITE, SQUARE_SIZE, GREY, CROWN
 import pygame
 
 #Building the pieces
-#Each piece is essentially shapes drawn on top of each other to make them appear like checker pieces
+##Each piece is essentially shapes drawn on top of each other to make them appear like checker pieces
 class Piece:
     PADDING = 15
     OUTLINE = 2
+    
     #Defines rows and columns colors 
     def __init__(self, row, col, color):
         self.row = row
@@ -19,9 +20,11 @@ class Piece:
     def calc_pos(self):
         self.x = SQUARE_SIZE * self.col + SQUARE_SIZE // 2
         self.y = SQUARE_SIZE * self.row + SQUARE_SIZE // 2
+
     #Defines king piece 
     def make_king(self):
         self.king = True
+
     #Draws the circles for the checkers pieces
     def draw(self, win):
         radius = SQUARE_SIZE//2 - self.PADDING

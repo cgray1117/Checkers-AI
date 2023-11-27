@@ -39,6 +39,7 @@ class Game:
             return True
             
         return False
+    
     #Finds valid moves
     def _move(self, row, col):
         piece = self.board.get_piece(row, col)
