@@ -7,6 +7,7 @@ class Game:
     def __init__(self, win):
         self._init()
         self.win = win
+        
     
     def update(self):
         self.board.draw(self.win)
@@ -18,6 +19,8 @@ class Game:
         self.board = Board()
         self.turn = RED
         self.valid_moves = {}
+        self.red_score = 0
+        self.white_score = 0
 
     def winner(self):
         return self.board.winner()
@@ -48,7 +51,11 @@ class Game:
             skipped = self.valid_moves[(row, col)]
             if skipped:
                 self.board.remove(skipped)
+                if self.turn == RED:
+                    self.red_score += 1
             self.change_turn()
+            print("Red Score: ", self.red_score)
+            print("White Score: ", self.white_score)
         else:
             return False
 
@@ -70,5 +77,7 @@ class Game:
         return self.board
 
     def ai_move(self, board):
+        if self.board.red_left > board.red_left:
+            self.white_score += 1
         self.board = board
         self.change_turn()
