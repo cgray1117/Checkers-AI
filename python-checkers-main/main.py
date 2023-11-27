@@ -8,7 +8,7 @@ from minimax.algorithm import minimax
 FPS = 60
 
 #Define the window and title
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
 
 #Set row and columns 
@@ -23,10 +23,11 @@ def get_row_col_from_mouse(pos):
 #Gets possible move positions
 #Shapes on top of shapes moving within the rules of checkers 
 
-def main():
+def play():
     run = True
     clock = pygame.time.Clock()
-    game = Game(WIN)
+    game = Game(WINDOW)
+
 
     while run:
         clock.tick(FPS)
@@ -52,4 +53,4 @@ def main():
     
     pygame.quit()
 
-main()
+play()
