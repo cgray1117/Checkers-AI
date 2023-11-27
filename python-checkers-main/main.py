@@ -3,13 +3,23 @@ import pygame
 from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from checkers.game import Game
 from minimax.algorithm import minimax
+from button import Button
+import sys
+
+pygame.init()
 
 #Frames per second for gameplay 
 FPS = 60
 
 #Define the window and title
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Checkers')
+
+# main menu background image
+BG = pygame.image.load("assets/main_menu_bg.png")
+BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
+
+def get_font(size): # Returns Press-Start-2P in the desired size
+    return pygame.font.Font("assets/font.ttf", size)
 
 #Set row and columns 
 def get_row_col_from_mouse(pos):
@@ -27,6 +37,8 @@ def play():
     run = True
     clock = pygame.time.Clock()
     game = Game(WINDOW)
+    WINDOW.fill("black")
+    pygame.display.set_caption('Checkers')
 
 
     while run:
@@ -53,4 +65,46 @@ def play():
     
     pygame.quit()
 
-play()
+def options():
+
+    pass
+
+def main_menu():
+    pygame.display.set_caption('Main Menu')
+
+    while True:
+        WINDOW.blit(BG, (0,0))
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+        MENU_TEXT = get_font(80).render("MAIN MENU", True, "#b68f40")
+        MENU_RECT = MENU_TEXT.get_rect(center=(400, 100))
+
+        PLAY_BUTTON = Button(image=pygame.image.load("assets/main_menu_button_rect.png"), pos=(400, 300), 
+                            text_input="PLAY", font=get_font(65), base_color="#d7fcd4", hovering_color="White")
+        OPTIONS_BUTTON = Button(image=pygame.image.load("assets/main_menu_button_rect.png"), pos=(400, 450), 
+                            text_input="OPTIONS", font=get_font(65), base_color="#d7fcd4", hovering_color="White")
+        QUIT_BUTTON = Button(image=pygame.image.load("assets/main_menu_button_rect.png"), pos=(400, 600), 
+                            text_input="QUIT", font=get_font(65), base_color="#d7fcd4", hovering_color="White")
+        
+        WINDOW.blit(MENU_TEXT, MENU_RECT)
+
+        for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(WINDOW)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    play()
+                if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    options()
+                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pygame.quit()
+                    sys.exit()
+
+        pygame.display.update()
+
+main_menu()
