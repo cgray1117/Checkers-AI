@@ -1,6 +1,6 @@
 # PyGame Checkers Project
 
-A game of checkers written using minmax algorithm and alpha-beta pruning.
+A game of checkers written using minmax algorithm with alpha-beta pruning and Q-learning.
 
 ## How to Use it
 
