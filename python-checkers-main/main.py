@@ -45,7 +45,7 @@ def play():
         clock.tick(FPS)
         #Checks whos turn is it, if its the computers turn or white then use minimax algorithm to find best move on the board
         if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), 4, WHITE, game)
+            value, new_board = minimax(game.get_board(), 6, WHITE, game)
             game.ai_move(new_board)
         #If there is no winner after the move then keep playing
         if game.winner() != None:
@@ -67,12 +67,37 @@ def play():
 
 def options():
 
-    pass
+    while True:
+        OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
+
+        WINDOW.fill('white')
+
+        CHOOSE_TEXT = get_font(45).render("CHOOSE ALGORITHM", True, "Black")
+        CHOOSE_RECT = CHOOSE_TEXT.get_rect(center=(400, 100))
+
+        WINDOW.blit(CHOOSE_TEXT, CHOOSE_RECT)
+
+        OPTIONS_BACK = Button(image=None, pos=(400, 600), 
+                            text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
+        
+        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
+        OPTIONS_BACK.update(WINDOW)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                    main_menu()
+
+        pygame.display.update()
 
 def main_menu():
-    pygame.display.set_caption('Main Menu')
+    
 
     while True:
+        pygame.display.set_caption('Main Menu')
         WINDOW.blit(BG, (0,0))
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
