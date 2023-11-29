@@ -89,14 +89,14 @@ def random_board():
     for ind, piece in enumerate(b):
         # randomly promote, remove, or add piece
         rand = np.random.random()
-        if piece != 0 and rand > promote:
+        if piece and rand > promote:
             b[ind] = piece * 3
-            promote = promote + 0.005
-        elif piece != 0 and rand < remove and rand > add:
+            promote += 0.005
+        elif piece and rand < remove and rand > add:
             b[ind] = 0
-            remove = remove - 0.025
-            add = add + 0.05
-        elif piece == 0 and rand < add:
+            remove -= 0.005
+            add += 0.05
+        elif not piece and rand < add:
             if np.random.random() > 0.5 and np.sum(b > 0) < 12:
                 b[ind] = 1
             if np.random.random() < 0.5 and np.sum(b < 0) < 12:
@@ -314,3 +314,4 @@ def generate_next(board):
                         board[i, j] = board[i - 1, j - 1]
                         board[i - 1, j - 1] = 0
     return bb[1:]
+

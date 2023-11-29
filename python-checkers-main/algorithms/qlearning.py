@@ -114,6 +114,9 @@ if __name__ == '__main__':
 
 		# calculate probilistic (noisy) labels
 		probabilistic = gen_model.predict_on_batch(metrics[:, 1:])
+		#for i in range(len(probabilistic)):
+			#print(metrics[i, 0], probabilistic[i])
+		
 
 		# calculate confidence score for each probabilistic label using error between probabilistic and weak label
 		confidence = 1/(1 + np.absolute(metrics[:, 0] - probabilistic[:, 0]))
@@ -123,7 +126,9 @@ if __name__ == '__main__':
 
 		# concat board position data with heurstic metric and pass for training - removed
 		# data = np.hstack((data, metrics[:, 1:]))
+
 		disc_model.fit(data, probabilistic, epochs=16, batch_size=64, sample_weight=confidence, verbose=0)
+		#print(np.sign(disc_model.predict_on_batch(data)))
 
 	# save models
 	gen_json = gen_model.to_json()
