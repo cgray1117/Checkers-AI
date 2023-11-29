@@ -122,7 +122,7 @@ if __name__ == '__main__':
 		confidence = 1/(1 + np.absolute(metrics[:, 0] - probabilistic[:, 0]))
 
 		# fit labels to {-1, 1}
-		probabilistic = np.sign(probabilistic)
+		#probabilistic = np.sign(probabilistic)
 
 		# concat board position data with heurstic metric and pass for training - removed
 		# data = np.hstack((data, metrics[:, 1:]))

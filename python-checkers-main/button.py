@@ -12,6 +12,11 @@ class Button():
         self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 	    
+    def change_base_color(self, color, hover=None):
+        if hover:
+            self.hovering_color = self.base_color
+        self.base_color = color
+        self.text = self.font.render(self.text_input, True, self.base_color)
 
     def update(self, window):
         if self.image:

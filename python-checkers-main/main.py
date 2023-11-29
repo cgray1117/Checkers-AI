@@ -45,8 +45,9 @@ def play():
         clock.tick(FPS)
         #Checks whos turn is it, if its the computers turn or white then use minimax algorithm to find best move on the board
         if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), 4, WHITE, game)
+            value, new_board = minimax(game.get_board(), 3, WHITE, game)
             game.ai_move(new_board)
+            print(value)
         #If there is no winner after the move then keep playing
         if game.winner() != None:
             print(game.winner())
@@ -67,6 +68,13 @@ def play():
 
 def options():
 
+    MINIMAX_BUTTON = Button(image=None, pos=(400, 300), 
+                            text_input="MINIMAX", font=get_font(65), base_color="black", hovering_color="#d7fcd4")
+    QLEARNING_BUTTON = Button(image=None, pos=(400, 450), 
+                        text_input="Q-LEARNING", font=get_font(65), base_color="#d7fcd4", hovering_color='black')
+    OPTIONS_BACK = Button(image=None, pos=(400, 600), 
+                        text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
+
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -75,13 +83,16 @@ def options():
         CHOOSE_TEXT = get_font(45).render("CHOOSE ALGORITHM", True, "Black")
         CHOOSE_RECT = CHOOSE_TEXT.get_rect(center=(400, 100))
 
-        WINDOW.blit(CHOOSE_TEXT, CHOOSE_RECT)
+        DEFAULT_TEXT = get_font(20).render("DEFAULT: MINIMAX", True, "Black")
+        DEFAULT_RECT = CHOOSE_TEXT.get_rect(center=(600, 200))
 
-        OPTIONS_BACK = Button(image=None, pos=(400, 600), 
-                            text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
-        
-        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
-        OPTIONS_BACK.update(WINDOW)
+        WINDOW.blit(CHOOSE_TEXT, CHOOSE_RECT)
+        WINDOW.blit(DEFAULT_TEXT, DEFAULT_RECT)
+
+        for button in [MINIMAX_BUTTON, QLEARNING_BUTTON, OPTIONS_BACK]:
+            button.changeColor(OPTIONS_MOUSE_POS)
+            button.update(WINDOW)
+    
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -90,6 +101,16 @@ def options():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     main_menu()
+                if MINIMAX_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    MINIMAX_BUTTON.change_base_color('Black')
+                    QLEARNING_BUTTON.change_base_color('#d7fcd4', True)
+                    MINIMAX_BUTTON.update(WINDOW)
+                    QLEARNING_BUTTON.update(WINDOW)
+                elif QLEARNING_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    QLEARNING_BUTTON.change_base_color('Black')
+                    MINIMAX_BUTTON.change_base_color('#d7fcd4', True)
+                    QLEARNING_BUTTON.update(WINDOW)
+                    MINIMAX_BUTTON.update(WINDOW)
 
         pygame.display.update()
 
