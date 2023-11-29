@@ -85,22 +85,22 @@ def random_board():
     b = get_board()
     promote = 0.9
     remove = 0.4
-    add = 0
-    for piece in b:
+    add = 0.1
+    for ind, piece in enumerate(b):
         # randomly promote, remove, or add piece
         rand = np.random.random()
         if piece != 0 and rand > promote:
-            piece = piece * 3
+            b[ind] = piece * 3
             promote = promote + 0.005
         elif piece != 0 and rand < remove and rand > add:
-            piece = 0
+            b[ind] = 0
             remove = remove - 0.025
             add = add + 0.05
         elif piece == 0 and rand < add:
             if np.random.random() > 0.5:
-                piece = 1
+                b[ind] = 1
             else:
-                piece = -1
+                b[ind] = -1
     return b
 
 # returns a count of all possible moves
@@ -314,3 +314,4 @@ def generate_next(board):
                         board[i, j] = board[i - 1, j - 1]
                         board[i - 1, j - 1] = 0
     return bb[1:]
+
