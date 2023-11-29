@@ -1,5 +1,8 @@
 import numpy as np
 
+
+
+
 # returns the initial board as a 1d array
 def get_board():
     return np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])

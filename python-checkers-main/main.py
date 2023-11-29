@@ -5,6 +5,8 @@ from checkers.game import Game
 from algorithms.minimax import minimax
 from button import Button
 import sys
+from algorithms.running_qlearning import best_move, convert_from_one_hot, convert_to_one_hot
+from algorithms.helper_functions import expand
 
 pygame.init()
 
@@ -17,6 +19,8 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 # main menu background image
 BG = pygame.image.load("assets/main_menu_bg.png")
 BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
+
+ALGORITHM = 'MINIMAX'
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("assets/font.ttf", size)
@@ -45,7 +49,10 @@ def play():
         clock.tick(FPS)
         #Checks whos turn is it, if its the computers turn or white then use minimax algorithm to find best move on the board
         if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), 3, WHITE, game)
+            if ALGORITHM == 'MINIMAX':
+                value, new_board = minimax(game.get_board(), 3, WHITE, game)
+            else:
+                new_board = convert_from_one_hot(expand(best_move(convert_to_one_hot(game.get_board().board))))
             game.ai_move(new_board)
             print(value)
         #If there is no winner after the move then keep playing
@@ -67,6 +74,8 @@ def play():
     pygame.quit()
 
 def options():
+
+    global ALGORITHM
 
     MINIMAX_BUTTON = Button(image=None, pos=(400, 300), 
                             text_input="MINIMAX", font=get_font(65), base_color="black", hovering_color="#d7fcd4")
@@ -102,11 +111,13 @@ def options():
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     main_menu()
                 if MINIMAX_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    ALGORITHM = 'MINIMAX'
                     MINIMAX_BUTTON.change_base_color('Black')
                     QLEARNING_BUTTON.change_base_color('#d7fcd4', True)
                     MINIMAX_BUTTON.update(WINDOW)
                     QLEARNING_BUTTON.update(WINDOW)
                 elif QLEARNING_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    ALGORITHM = 'QLEARNING'
                     QLEARNING_BUTTON.change_base_color('Black')
                     MINIMAX_BUTTON.change_base_color('#d7fcd4', True)
                     QLEARNING_BUTTON.update(WINDOW)

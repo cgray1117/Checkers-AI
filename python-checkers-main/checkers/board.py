@@ -20,16 +20,7 @@ class Board:
     def evaluate(self):
         return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
     
-    def convert_to_one_hot(self):
-        converted_board = np.zeros((8,8))
-        for row_ind, row in enumerate(self.board):
-            for col_ind, piece in enumerate(self.board):
-                if piece:
-                    if piece.color == WHITE:
-                        converted_board[row_ind, col_ind] = 1
-                    else:
-                        converted_board[row_ind, col_ind] = -1
-        return converted_board
+    
 
 
     def get_all_pieces(self, color):
