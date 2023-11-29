@@ -97,9 +97,9 @@ def random_board():
             remove = remove - 0.025
             add = add + 0.05
         elif piece == 0 and rand < add:
-            if np.random.random() > 0.5:
+            if np.random.random() > 0.5 and np.sum(b > 0) < 12:
                 b[ind] = 1
-            else:
+            if np.random.random() < 0.5 and np.sum(b < 0) < 12:
                 b[ind] = -1
     return b
 
@@ -314,4 +314,3 @@ def generate_next(board):
                         board[i, j] = board[i - 1, j - 1]
                         board[i - 1, j - 1] = 0
     return bb[1:]
-
