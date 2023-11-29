@@ -8,7 +8,7 @@ Open this repository inside your favorite code editor (VS Code for example). Ope
 
 For Mac, run 
 
-`source .venv/bin/activate`
+`source .venv/Scripts/activate`
 
 For Windows, run, 
 
