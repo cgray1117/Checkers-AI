@@ -178,9 +178,15 @@ def get_metrics(board): # returns [label, 10 labeling metrics]
 
 def np_board():
 	return np.array(get_board())
-
+ 
 def get_board():
-	return [1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  0, 0, 0, 0,  0, 0, 0, 0,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1]
+    return np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
+
+print("Current Board:")
+print(board)
+
+#def get_board():
+	#return [1, 1, 1, 1,  1, 1, 1, 1,  1, 1, 1, 1,  0, 0, 0, 0,  0, 0, 0, 0,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1]
 
 def expand(board):
 	b = np.zeros((8, 8), dtype='b')
@@ -259,74 +265,75 @@ def generate_branches(board, x, y):
 				board[x-2, y-2] = 0
 	return bb
 
+# Modify the generate_next function:
 def generate_next(board):
-	bb = np.array([get_board()])
-	for i in range(0, 8):
-		for j in range(0, 8):
-			if (board[i, j] > 0):
-				bb = np.vstack((bb, generate_branches(board, i, j)[1:]))
-	if (len(bb) > 1):
-		return bb[1:]
-	for i in range(0, 8):
-		for j in range(0, 8):
-			if (board[i, j] >= 1 and i < 7):
-				temp = board[i, j]
-				if (j < 7):
-					if (board[i+1, j+1] == 0):
-						board[i+1, j+1] = board[i, j]
-						if (i+1 == 7):
-							board[i+1, j+1] = 3
-						board[i, j] = 0
-						bb = np.vstack((bb, compress(board)))
-						board[i, j] = temp
-						board[i+1, j+1] = 0
-				if (j > 0):
-					if (board[i+1, j-1] == 0):
-						board[i+1, j-1] = board[i, j]
-						if (i+1 == 7):
-							board[i+1, j-1] = 3
-						board[i, j] = 0
-						bb = np.vstack((bb, compress(board)))
-						board[i, j] = temp
-						board[i+1, j-1] = 0
-			if (board[i, j] == 3 and i > 0):
-				if (j < 7):
-					if (board[i-1, j+1] == 0):
-						board[i-1, j+1] = board[i, j]
-						board[i, j] = 0
-						bb = np.vstack((bb, compress(board)))
-						board[i, j] = board[i-1, j+1]
-						board[i-1, j+1] = 0
-				elif (j > 0):
-					if (board[i-1, j-1] == 0):
-						board[i-1, j-1] = board[i, j]
-						board[i, j] = 0
-						bb = np.vstack((bb, compress(board)))
-						board[i, j] = board[i-1, j-1]
-						board[i-1, j-1] = 0
-	return bb[1:]
+    bb = np.array([get_board()])
+    for i in range(0, 8):
+        for j in range(0, 8):
+            if board[i, j] > 0:
+                bb = np.vstack((bb, generate_branches(board, i, j)[1:]))
+    if len(bb) > 1:
+        return bb[1:]
+    for i in range(0, 8):
+        for j in range(0, 8):
+            if board[i, j] >= 1 and i < 7:
+                temp = board[i, j]
+                if j < 7:
+                    if board[i + 1, j + 1] == 0:
+                        board[i + 1, j + 1] = board[i, j]
+                        if i + 1 == 7:
+                            board[i + 1, j + 1] = 3
+                        board[i, j] = 0
+                        bb = np.vstack((bb, compress(board)))
+                        board[i, j] = temp
+                        board[i + 1, j + 1] = 0
+                if j > 0:
+                    if board[i + 1, j - 1] == 0:
+                        board[i + 1, j - 1] = board[i, j]
+                        if i + 1 == 7:
+                            board[i + 1, j - 1] = 3
+                        board[i, j] = 0
+                        bb = np.vstack((bb, compress(board)))
+                        board[i, j] = temp
+                        board[i + 1, j - 1] = 0
+            if board[i, j] == 3 and i > 0:
+                if j < 7:
+                    if board[i - 1, j + 1] == 0:
+                        board[i - 1, j + 1] = board[i, j]
+                        board[i, j] = 0
+                        bb = np.vstack((bb, compress(board)))
+                        board[i, j] = board[i - 1, j + 1]
+                        board[i - 1, j + 1] = 0
+                elif j > 0:
+                    if board[i - 1, j - 1] == 0:
+                        board[i - 1, j - 1] = board[i, j]
+                        board[i, j] = 0
+                        bb = np.vstack((bb, compress(board)))
+                        board[i, j] = board[i - 1, j - 1]
+                        board[i - 1, j - 1] = 0
+    return bb[1:]
 
 def random_board():
-	b = get_board()
-	promote = 0.9
-	remove = 0.4
-	add = 0
-	for piece in b:
-		# randomly promote, remove, or add piece
-		rand = np.random.random()
-		if piece is not 0 and rand > promote:
-			piece = piece * 3
-			promote = promote + 0.005
-		elif piece is not 0 and rand < remove:
-			piece = 0
-			remove = remove - 0.025
-			add = add + 0.05
-		elif piece is 0 and rand < add:
-			if np.random.random() > 0.5:
-				piece = 1
-			else:
-				piece = -1
-	return b
+    b = get_board()
+    promote = 0.9
+    remove = 0.4
+    add = 0
+    for piece in b:
+        # randomly promote, remove, or add piece
+        rand = np.random.random()
+        if piece != 0 and rand > promote:
+            piece = piece * 3
+            promote = promote + 0.005
+        elif piece != 0 and rand < remove:
+            piece = 0
+            remove = remove - 0.025
+            add = add + 0.05
+        elif piece == 0 and rand < add:
+            if np.random.random() > 0.5:
+                piece = 1
+            else:
+                piece = -1
+    return b
 
 if __name__ == '__main__':
 	# generative model, which only looks at heuristic scoring metrics used for labeling
