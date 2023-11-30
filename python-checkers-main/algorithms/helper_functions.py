@@ -1,15 +1,18 @@
 import numpy as np
+from copy import deepcopy
+import pygame
 
-
-
+# ---------------------------------------------------------------- Q-Learning ----------------------------------------------------------------
 
 # returns the initial board as a 1d array
 def get_board():
     return np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
+	# return Board()
 
 # number of opponent pieces captured (max = 12)
 def num_captured(board):
 	return 12 - np.sum(board < 0)
+	# return 12 - board.red_left
 
 # returns a 1d board ie. get_board() as 8x8 array
 def expand(board): 
@@ -41,6 +44,7 @@ def reverse(board):
 # return count of non-king pieces
 def num_men(board):
 	return np.sum(board == 1)
+	# return board.white_left - board.white_kings
 
 # return count of king pieces
 def num_kings(board):
@@ -318,3 +322,34 @@ def generate_next(board):
                         board[i - 1, j - 1] = 0
     return bb[1:]
 
+# ---------------------------------------------------------------- Minimax ----------------------------------------------------------------
+def simulate_move(piece, move, board, game, skip):
+    board.move(piece, move[0], move[1])
+    if skip:
+        board.remove(skip)
+
+    return board
+
+#Figures out where valid moves are located
+def get_all_moves(board, color, game):
+    moves = []
+
+    for piece in board.get_all_pieces(color):
+        valid_moves = board.get_valid_moves(piece)
+        for move, skip in valid_moves.items():
+            #draw_moves(game, board, piece)
+            temp_board = deepcopy(board)
+            temp_piece = temp_board.get_piece(piece.row, piece.col)
+            new_board = simulate_move(temp_piece, move, temp_board, game, skip)
+            moves.append(new_board)
+    
+    return moves
+
+#Shows where the possible moves are 
+def draw_moves(game, board, piece):
+    valid_moves = board.get_valid_moves(piece)
+    board.draw(game.win)
+    pygame.draw.circle(game.win, (0,255,0), (piece.x, piece.y), 50, 5)
+    game.draw_valid_moves(valid_moves.keys())
+    pygame.display.update()
+    #pygame.time.delay(100)

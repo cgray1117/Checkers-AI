@@ -39,10 +39,14 @@ def convert_from_one_hot(board, game):
     game.board.board = new_board
     return game.board
 
-def best_move(board):
-  boards = np.zeros((0, 32))
-  boards = generate_next(board)
-  scores = disc_model.predict_on_batch(boards)
-  max_index = np.argmax(scores)
-  best = boards[max_index]
-  return best
+def best_move(board, game):
+    boards0 = np.array(compress(convert_to_one_hot(board.board)))
+    #boards = generate_next(board)
+    boards = get_all_moves(board, WHITE, game)
+    for b in boards:
+        boards0 = np.vstack((boards0, compress(convert_to_one_hot(b.board))))
+    print(boards0)
+    scores = disc_model.predict_on_batch(boards0[1:])
+    max_index = np.argmax(scores)
+    best = boards[max_index]
+    return best

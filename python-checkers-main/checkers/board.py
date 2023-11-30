@@ -10,6 +10,7 @@ class Board:
         self.red_left = self.white_left = 12
         self.red_kings = self.white_kings = 0
         self.create_board()
+
     #Draw the Grid squares of the board
     def draw_squares(self, win):
         win.fill(BLACK)
@@ -20,9 +21,6 @@ class Board:
     def evaluate(self):
         return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
     
-    
-
-
     def get_all_pieces(self, color):
         pieces = []
         for row in self.board:
@@ -81,7 +79,6 @@ class Board:
             return WHITE
         elif self.white_left <= 0:
             return RED
-        
         return None 
     
     #moving left is essentially moving closer to zero, therefore it is -1 and moving right is further away 
