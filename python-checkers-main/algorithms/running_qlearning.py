@@ -2,6 +2,7 @@ from keras.models import model_from_json
 from algorithms.helper_functions import *
 from checkers.piece import Piece
 from checkers.constants import WHITE, RED
+from checkers.board import Board
 
 json_file = open('disc.json', 'r')
 board_json = json_file.read()
@@ -22,17 +23,21 @@ def convert_to_one_hot(board):
                         converted_board[row_ind, col_ind] = -1
         return converted_board
     
-def convert_from_one_hot(board):
-    converted_board = np.zeros((8,8))
+def convert_from_one_hot(board, game):
+    print(game.board.board)
+    new_board = []
+    for row in range(8):
+        new_board.append([0, 0, 0, 0, 0, 0, 0, 0])
+       
     for row_ind, row in enumerate(board):
-        print(row_ind)
         for col_ind, piece in enumerate(row):
             if piece:
                 if piece == 1:
-                    converted_board[row_ind, col_ind] = Piece(row_ind, col_ind, WHITE)
-                else:
-                    converted_board[row_ind, col_ind] = Piece(row_ind, col_ind, RED)
-    return converted_board
+                    new_board[row_ind][col_ind] = Piece(row_ind, col_ind, WHITE)
+                elif piece == -1:
+                    new_board[row_ind][col_ind] = Piece(row_ind, col_ind, RED) 
+    game.board.board = new_board
+    return game.board
 
 def best_move(board):
   boards = np.zeros((0, 32))

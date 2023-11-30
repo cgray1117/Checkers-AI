@@ -52,9 +52,8 @@ def play():
             if ALGORITHM == 'MINIMAX':
                 value, new_board = minimax(game.get_board(), 3, WHITE, game)
             else:
-                new_board = convert_from_one_hot(expand(best_move(convert_to_one_hot(game.get_board().board))))
+                new_board = convert_from_one_hot(expand(best_move(convert_to_one_hot(game.get_board().board))), game)
             game.ai_move(new_board)
-            print(value)
         #If there is no winner after the move then keep playing
         if game.winner() != None:
             print(game.winner())
