@@ -5,8 +5,8 @@ from checkers.game import Game
 from algorithms.minimax import minimax
 from button import Button
 import sys
-from algorithms.running_qlearning import best_move, convert_from_one_hot, convert_to_one_hot
-from algorithms.helper_functions import expand
+from algorithms.running_qlearning import best_move
+
 
 pygame.init()
 
@@ -17,13 +17,13 @@ FPS = 60
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 # main menu background image
-BG = pygame.image.load("assets/main_menu_bg.png")
+BG = pygame.image.load("checkers_main/assets/main_menu_bg.png")
 BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
 
 ALGORITHM = 'MINIMAX'
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("assets/font.ttf", size)
+    return pygame.font.Font("checkers_main/assets/font.ttf", size)
 
 #Set row and columns 
 def get_row_col_from_mouse(pos):
@@ -135,11 +135,11 @@ def main_menu():
         MENU_TEXT = get_font(80).render("MAIN MENU", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(400, 100))
 
-        PLAY_BUTTON = Button(image=pygame.image.load("assets/main_menu_button_rect.png"), pos=(400, 300), 
+        PLAY_BUTTON = Button(image=pygame.image.load("checkers_main/assets/main_menu_button_rect.png"), pos=(400, 300), 
                             text_input="PLAY", font=get_font(65), base_color="#d7fcd4", hovering_color="White")
-        OPTIONS_BUTTON = Button(image=pygame.image.load("assets/main_menu_button_rect.png"), pos=(400, 450), 
+        OPTIONS_BUTTON = Button(image=pygame.image.load("checkers_main/assets/main_menu_button_rect.png"), pos=(400, 450), 
                             text_input="OPTIONS", font=get_font(65), base_color="#d7fcd4", hovering_color="White")
-        QUIT_BUTTON = Button(image=pygame.image.load("assets/main_menu_button_rect.png"), pos=(400, 600), 
+        QUIT_BUTTON = Button(image=pygame.image.load("checkers_main/assets/main_menu_button_rect.png"), pos=(400, 600), 
                             text_input="QUIT", font=get_font(65), base_color="#d7fcd4", hovering_color="White")
         
         WINDOW.blit(MENU_TEXT, MENU_RECT)

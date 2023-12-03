@@ -13,4 +13,4 @@ BLUE = (0, 0, 255)
 GREY = (128,128,128)
 
 #Defines the kings when a player kings a piece
-CROWN = pygame.transform.scale(pygame.image.load('assets/king.png'), (44, 25))
+CROWN = pygame.transform.scale(pygame.image.load('checkers_main/assets/king.png'), (44, 25))
