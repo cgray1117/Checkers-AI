@@ -19,7 +19,7 @@ if __name__ == '__main__':
 	learning_rate = 0.5
 	discount_factor = 0.95
 
-	for gen in range(0, 500):
+	for gen in range(0, 1):
 		for game in range(0, 200):
 			temp_data = np.zeros((1, 32))
 			board = expand(get_board())
