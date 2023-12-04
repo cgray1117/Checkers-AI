@@ -80,4 +80,5 @@ class Game:
         if self.board.red_left > board.red_left:
             self.white_score += 1
         self.board = board
+        print(board.board)
         self.change_turn()
