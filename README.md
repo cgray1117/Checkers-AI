@@ -15,4 +15,4 @@ Open this repository inside your favorite code editor (VS Code for example). Ope
 
 In the terminal run:
 
-`python python-checkers-main/main.py`
+`python checkers_main/main.py`
