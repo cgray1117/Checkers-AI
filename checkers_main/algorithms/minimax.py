@@ -17,11 +17,11 @@ def minimax(position, depth, max_player, game, ALPHA=MIN, BETA=MAX):
         maxEval = MIN
         best_move = None
         for move in get_all_moves(position, WHITE, game):
-            evaluation = minimax(move, depth-1, False, game, ALPHA, BETA)[0]
+            evaluation = minimax(move, depth-1, False, game)[0]
             maxEval = max(maxEval, evaluation)
-            ALPHA = max(ALPHA, maxEval)
-            if BETA <= ALPHA:
-                break
+            #ALPHA = max(ALPHA, maxEval)
+            #if BETA <= ALPHA:
+                #break
             if maxEval == evaluation:
                 best_move = move
         
@@ -31,11 +31,11 @@ def minimax(position, depth, max_player, game, ALPHA=MIN, BETA=MAX):
         minEval = MAX
         best_move = None
         for move in get_all_moves(position, RED, game):
-            evaluation = minimax(move, depth-1, True, game, ALPHA, BETA)[0]
+            evaluation = minimax(move, depth-1, True, game)[0]
             minEval = min(minEval, evaluation)
-            BETA = min(BETA, minEval)
-            if BETA <= ALPHA:
-                break
+            #BETA = min(BETA, minEval)
+            #if BETA <= ALPHA:
+                #break
             if minEval == evaluation:
                 best_move = move
         
